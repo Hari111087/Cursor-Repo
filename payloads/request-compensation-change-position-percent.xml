@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Variant: update position base pay by percent change (instead of absolute Amount).
+  Send only Percent_Change — do not also send Amount or Amount_Change.
+-->
+<bsvc:Request_Compensation_Change_Request
+    xmlns:bsvc="urn:com.workday/bsvc"
+    bsvc:version="v42.0">
+
+    <bsvc:Business_Process_Parameters>
+        <bsvc:Auto_Complete>false</bsvc:Auto_Complete>
+        <bsvc:Run_Now>true</bsvc:Run_Now>
+        <bsvc:Comment_Data>
+            <bsvc:Comment>{{COMMENT}}</bsvc:Comment>
+        </bsvc:Comment_Data>
+    </bsvc:Business_Process_Parameters>
+
+    <bsvc:Request_Compensation_Change_Data>
+        <bsvc:Employee_Reference>
+            <bsvc:ID bsvc:type="Employee_ID">{{EMPLOYEE_ID}}</bsvc:ID>
+        </bsvc:Employee_Reference>
+
+        <bsvc:Position_Reference>
+            <bsvc:ID bsvc:type="Position_ID">{{POSITION_ID}}</bsvc:ID>
+        </bsvc:Position_Reference>
+
+        <bsvc:Compensation_Change_Date>{{EFFECTIVE_DATE}}</bsvc:Compensation_Change_Date>
+
+        <bsvc:Compensation_Change_Data>
+            <bsvc:Reason_Reference>
+                <bsvc:ID bsvc:type="General_Event_Subcategory_ID">{{REASON_ID}}</bsvc:ID>
+            </bsvc:Reason_Reference>
+
+            <bsvc:Pay_Plan_Data bsvc:Replace="false">
+                <bsvc:Pay_Plan_Sub_Data>
+                    <bsvc:Pay_Plan_Reference>
+                        <bsvc:ID bsvc:type="Compensation_Plan_ID">{{PAY_PLAN_ID}}</bsvc:ID>
+                    </bsvc:Pay_Plan_Reference>
+                    <bsvc:Percent_Change>{{PERCENT_CHANGE}}</bsvc:Percent_Change>
+                    <bsvc:Currency_Reference>
+                        <bsvc:ID bsvc:type="Currency_ID">{{CURRENCY}}</bsvc:ID>
+                    </bsvc:Currency_Reference>
+                    <bsvc:Frequency_Reference>
+                        <bsvc:ID bsvc:type="Frequency_ID">{{FREQUENCY}}</bsvc:ID>
+                    </bsvc:Frequency_Reference>
+                </bsvc:Pay_Plan_Sub_Data>
+            </bsvc:Pay_Plan_Data>
+        </bsvc:Compensation_Change_Data>
+    </bsvc:Request_Compensation_Change_Data>
+</bsvc:Request_Compensation_Change_Request>

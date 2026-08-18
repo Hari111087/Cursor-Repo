@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Workday: Request_Compensation_Change
+  Purpose: Update compensation for a specific employee position (base pay plan).
+
+  Replace placeholder values before submit:
+    {{EMPLOYEE_ID}}              e.g. 21001
+    {{POSITION_ID}}              e.g. P-00012  (required for multi-job workers)
+    {{EFFECTIVE_DATE}}           e.g. 2026-08-18
+    {{REASON_ID}}                Compensation Change Reason ID or WID
+    {{PAY_PLAN_ID}}              Salary / Hourly plan ID (e.g. Salary_Plan)
+    {{AMOUNT}}                   New base amount (use ONE of Amount | Percent_Change | Amount_Change)
+    {{CURRENCY}}                 e.g. USD
+    {{FREQUENCY}}                e.g. Annual, Hourly
+    {{COMMENT}}                  Optional process comment
+-->
+<bsvc:Request_Compensation_Change_Request
+    xmlns:bsvc="urn:com.workday/bsvc"
+    bsvc:version="v42.0">
+
+    <bsvc:Business_Process_Parameters>
+        <bsvc:Auto_Complete>false</bsvc:Auto_Complete>
+        <bsvc:Run_Now>true</bsvc:Run_Now>
+        <bsvc:Comment_Data>
+            <bsvc:Comment>{{COMMENT}}</bsvc:Comment>
+        </bsvc:Comment_Data>
+    </bsvc:Business_Process_Parameters>
+
+    <bsvc:Request_Compensation_Change_Data>
+        <bsvc:Employee_Reference>
+            <bsvc:ID bsvc:type="Employee_ID">{{EMPLOYEE_ID}}</bsvc:ID>
+        </bsvc:Employee_Reference>
+
+        <!-- Include for multi-job employees; scopes the change to this position -->
+        <bsvc:Position_Reference>
+            <bsvc:ID bsvc:type="Position_ID">{{POSITION_ID}}</bsvc:ID>
+        </bsvc:Position_Reference>
+
+        <!-- Choice: effective date OR next pay period (do not send both) -->
+        <bsvc:Compensation_Change_Date>{{EFFECTIVE_DATE}}</bsvc:Compensation_Change_Date>
+
+        <bsvc:Compensation_Change_Data>
+            <bsvc:Reason_Reference>
+                <bsvc:ID bsvc:type="General_Event_Subcategory_ID">{{REASON_ID}}</bsvc:ID>
+            </bsvc:Reason_Reference>
+
+            <!-- Replace="false" updates the matching plan; "true" replaces all pay-plan assignments -->
+            <bsvc:Pay_Plan_Data bsvc:Replace="false">
+                <bsvc:Pay_Plan_Sub_Data>
+                    <bsvc:Pay_Plan_Reference>
+                        <bsvc:ID bsvc:type="Compensation_Plan_ID">{{PAY_PLAN_ID}}</bsvc:ID>
+                    </bsvc:Pay_Plan_Reference>
+
+                    <!-- Choice: Amount | Percent_Change | Amount_Change (send only one) -->
+                    <bsvc:Amount>{{AMOUNT}}</bsvc:Amount>
+
+                    <bsvc:Currency_Reference>
+                        <bsvc:ID bsvc:type="Currency_ID">{{CURRENCY}}</bsvc:ID>
+                    </bsvc:Currency_Reference>
+
+                    <bsvc:Frequency_Reference>
+                        <bsvc:ID bsvc:type="Frequency_ID">{{FREQUENCY}}</bsvc:ID>
+                    </bsvc:Frequency_Reference>
+                </bsvc:Pay_Plan_Sub_Data>
+            </bsvc:Pay_Plan_Data>
+        </bsvc:Compensation_Change_Data>
+    </bsvc:Request_Compensation_Change_Data>
+</bsvc:Request_Compensation_Change_Request>
