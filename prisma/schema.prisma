@@ -1,0 +1,226 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  googleAccount GoogleAccount?
+  settings      Settings?
+  tasks         Task[]
+  focusSessions FocusSession[]
+  emails        EmailMeta[]
+  drafts        EmailDraft[]
+  watchlist     WatchlistItem[]
+  alerts        PriceAlert[]
+  holdings      Holding[]
+  riskProfile   RiskProfile?
+  insights      Insight[]
+  briefings     Briefing[]
+  pushSubs      PushSubscription[]
+}
+
+/// OAuth tokens are AES-256-GCM encrypted (see src/lib/crypto.ts). Never store plaintext.
+model GoogleAccount {
+  id                    String    @id @default(cuid())
+  userId                String    @unique
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  providerAccountId     String    @unique
+  accessTokenEnc        String
+  refreshTokenEnc       String?
+  expiresAt             DateTime?
+  scope                 String
+  gmailLastCheckedAt    DateTime?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+}
+
+model Settings {
+  id                 String   @id @default(cuid())
+  userId             String   @unique
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  theme              String   @default("dark")
+  voiceEnabled       Boolean  @default(true)
+  notifyEmail        Boolean  @default(true)
+  notifyEmailLevel   String   @default("important") // urgent | important | all
+  notifyMarkets      Boolean  @default(true)
+  notifyNudges       Boolean  @default(true)
+  notifyBriefing     Boolean  @default(true)
+  quietHoursEnabled  Boolean  @default(true)
+  quietStart         String   @default("22:00")
+  quietEnd           String   @default("07:00")
+  briefingTime       String   @default("07:30")
+  updatedAt          DateTime @updatedAt
+}
+
+enum TaskBucket {
+  TODAY
+  WEEK
+  LATER
+  DONE
+}
+
+enum Priority {
+  P1
+  P2
+  P3
+  P4
+}
+
+model Task {
+  id          String     @id @default(cuid())
+  userId      String
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  notes       String?
+  priority    Priority   @default(P3)
+  bucket      TaskBucket @default(TODAY)
+  tags        String[]
+  dueAt       DateTime?
+  estimateMin Int        @default(30)
+  completedAt DateTime?
+  order       Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([userId, bucket])
+}
+
+model FocusSession {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  taskId    String?
+  kind      String   @default("focus") // focus | break
+  minutes   Int
+  startedAt DateTime
+  endedAt   DateTime
+
+  @@index([userId, startedAt])
+}
+
+model EmailMeta {
+  id          String   @id // Gmail message id
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  threadId    String
+  from        String
+  subject     String
+  snippet     String
+  receivedAt  DateTime
+  category    String   // URGENT | IMPORTANT | FYI | PROMO
+  reason      String?
+  summary     String?
+  isUnread    Boolean  @default(true)
+  notifiedAt  DateTime?
+  createdAt   DateTime @default(now())
+
+  @@index([userId, receivedAt])
+}
+
+/// Every outgoing email lives here first. Only an explicit approval by Hari sends it.
+model EmailDraft {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  to          String
+  cc          String?
+  subject     String
+  body        String
+  tone        String    @default("friendly")
+  inReplyTo   String?   // RFC Message-ID header of the email being replied to
+  threadId    String?
+  status      String    @default("PENDING") // PENDING | SENT | DISCARDED
+  approvedAt  DateTime?
+  sentAt      DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model WatchlistItem {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  symbol    String
+  name      String?
+  market    String   @default("US") // US | IN
+  createdAt DateTime @default(now())
+
+  @@unique([userId, symbol])
+}
+
+model PriceAlert {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  symbol      String
+  kind        String    // ABOVE | BELOW | PCT_UP | PCT_DOWN
+  threshold   Float
+  active      Boolean   @default(true)
+  triggeredAt DateTime?
+  createdAt   DateTime  @default(now())
+}
+
+model Holding {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  symbol    String
+  name      String?
+  quantity  Float
+  avgCost   Float
+  currency  String   @default("USD")
+  sector    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RiskProfile {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  profile      String   // conservative | moderate | aggressive
+  answers      Json
+  goals        String
+  horizonYears Int
+  updatedAt    DateTime @updatedAt
+}
+
+model Insight {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content   Json
+  createdAt DateTime @default(now())
+}
+
+model Briefing {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date      String   // YYYY-MM-DD in APP_TIMEZONE
+  content   Json
+  createdAt DateTime @default(now())
+
+  @@unique([userId, date])
+}
+
+model PushSubscription {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now())
+}

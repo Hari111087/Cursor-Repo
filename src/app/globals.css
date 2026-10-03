@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Brand palette as RGB triplets so Tailwind can apply alpha */
+    --cyan: 0 229 255;
+    --violet: 139 92 246;
+    --magenta: 255 46 151;
+    --gold: 255 200 87;
+    --success: 34 227 160;
+    --danger: 255 77 109;
+
+    /* Light theme */
+    --background: 228 40% 97%;
+    --foreground: 232 50% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 232 50% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 232 50% 12%;
+    --muted: 228 30% 92%;
+    --muted-foreground: 230 15% 38%;
+    --border: 230 30% 85%;
+    --input: 230 30% 85%;
+    --ring: 188 100% 40%;
+
+    --glass-bg: 255 255 255;
+    --glass-alpha: 0.7;
+    --glass-border: 15 23 70;
+    --glass-border-alpha: 0.1;
+    --grid-line: 15 23 70;
+    --grid-alpha: 0.05;
+  }
+
+  .light {
+    /* Darker brand tints keep text contrast >= 4.5:1 on light surfaces */
+    --cyan: 0 132 160;
+    --violet: 109 62 216;
+    --magenta: 200 20 110;
+    --gold: 170 115 0;
+    --success: 0 140 95;
+    --danger: 205 30 65;
+  }
+
+  .dark {
+    --background: 232 59% 10%;
+    --foreground: 220 40% 96%;
+    --card: 231 52% 14%;
+    --card-foreground: 220 40% 96%;
+    --popover: 231 52% 12%;
+    --popover-foreground: 220 40% 96%;
+    --muted: 231 40% 18%;
+    --muted-foreground: 225 25% 72%;
+    --border: 225 60% 80%;
+    --input: 230 40% 24%;
+    --ring: 186 100% 50%;
+
+    --glass-bg: 17 23 53;
+    --glass-alpha: 0.55;
+    --glass-border: 160 190 255;
+    --glass-border-alpha: 0.12;
+    --grid-line: 0 229 255;
+    --grid-alpha: 0.06;
+  }
+
+  * {
+    @apply border-[rgb(var(--glass-border)/var(--glass-border-alpha))];
+  }
+  html {
+    -webkit-tap-highlight-color: transparent;
+    background-color: #f4f6ff;
+  }
+  html.dark {
+    background-color: #0a0e27;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    min-height: 100dvh;
+  }
+  .dark body {
+    background: linear-gradient(160deg, #0a0e27 0%, #111735 60%, #0d1230 100%) fixed;
+  }
+  .light body {
+    background: linear-gradient(160deg, #f4f6ff 0%, #e9edff 100%) fixed;
+  }
+  h1, h2, h3 {
+    @apply font-display tracking-wide;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-cyan ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer components {
+  .glass {
+    background: rgb(var(--glass-bg) / var(--glass-alpha));
+    border: 1px solid rgb(var(--glass-border) / var(--glass-border-alpha));
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+  }
+  .text-gradient {
+    background: linear-gradient(90deg, rgb(var(--cyan)), rgb(var(--violet)) 50%, rgb(var(--magenta)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .glow-text {
+    text-shadow: 0 0 12px rgb(var(--cyan) / 0.6);
+  }
+  .neon-border {
+    box-shadow: 0 0 0 1px rgb(var(--cyan) / 0.5), 0 0 18px rgb(var(--cyan) / 0.25), inset 0 0 12px rgb(var(--cyan) / 0.08);
+  }
+  .hud-grid {
+    background-image:
+      linear-gradient(rgb(var(--grid-line) / var(--grid-alpha)) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--grid-line) / var(--grid-alpha)) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+  .scrollbar-thin::-webkit-scrollbar-thumb { background: rgb(var(--cyan) / 0.25); border-radius: 999px; }
+  .skeleton {
+    background: linear-gradient(90deg, rgb(var(--glass-border) / 0.06), rgb(var(--glass-border) / 0.14), rgb(var(--glass-border) / 0.06));
+    background-size: 200% 100%;
+    @apply animate-shimmer rounded-md;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
