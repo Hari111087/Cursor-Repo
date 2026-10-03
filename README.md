@@ -96,7 +96,9 @@ Sign in with Google, then open **Settings → Notifications → Enable on this d
 2. Add every variable from the table above in **Project → Settings → Environment Variables** (`DEMO_MODE=false`, `NEXTAUTH_URL=https://your-app.vercel.app`).
 3. Add `https://your-app.vercel.app/api/auth/callback/google` as an authorized redirect URI in Google Cloud.
 4. The build runs `prisma generate`. Run migrations against production once: `DATABASE_URL=... npx prisma migrate deploy`.
-5. **Background jobs:** `vercel.json` defines crons for `/api/cron/poll-email` (2 min), `check-alerts` (5 min), `briefing` and `nudges`. Vercel sends `Authorization: Bearer $CRON_SECRET` automatically. Cron schedules are in **UTC**. Sub-daily crons need a Vercel Pro plan. On Hobby, run `npm run worker` on a small always-on host (Railway, Fly.io, a VPS), or point any external scheduler at the cron URLs with the bearer header.
+5. **Background jobs:** `vercel.json` ships with one daily cron (the morning briefing at 02:15 UTC = 07:45 IST) so it deploys on the **free Hobby plan**, which only allows daily crons. Vercel sends `Authorization: Bearer $CRON_SECRET` automatically. For 2-minute email polling and price alerts, either:
+   - upgrade to Vercel Pro and add `{ "path": "/api/cron/poll-email", "schedule": "*/2 * * * *" }` and `{ "path": "/api/cron/check-alerts", "schedule": "*/5 * * * *" }` to `vercel.json`, or
+   - run `npm run worker` on a small always-on host (Railway, Fly.io, a VPS), or point any external scheduler (e.g. cron-job.org) at `https://your-app/api/cron/poll-email` with the bearer header.
 
 ## Architecture
 
