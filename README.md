@@ -20,11 +20,26 @@ Next.js 14 (App Router) · TypeScript · Tailwind CSS + shadcn/ui-style componen
 
 ## Quick start (demo mode, no keys needed)
 
+Install [Node.js 20+](https://nodejs.org), then:
+
+- **Windows:** double-click `setup.bat`
+- **macOS / Linux:** run `./setup.sh`
+
+The script checks Node, creates `.env.local` with fresh random secrets, installs dependencies and starts the app at http://localhost:3000. Or do it manually:
+
 ```bash
 npm install
 cp .env.example .env.local     # DEMO_MODE=true is the default
 npm run dev                    # http://localhost:3000
 ```
+
+### Installing it as an app (PWA)
+Once it's running (or deployed, see below):
+- **Desktop Chrome / Edge:** click the install icon in the address bar → *Install*.
+- **Android (Chrome):** menu ⋮ → *Install app*.
+- **iPhone (Safari):** Share → *Add to Home Screen*.
+
+Phones need the app served over HTTPS, so install on mobile from your Vercel URL rather than `localhost`.
 
 ## Full setup
 
