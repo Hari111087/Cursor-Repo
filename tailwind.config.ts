@@ -29,6 +29,7 @@ const config: Config = {
       },
       fontFamily: {
         display: ["var(--font-orbitron)", "ui-sans-serif", "system-ui"],
+        script: ["var(--font-script)", "cursive"],
         sans: ["var(--font-inter)", "ui-sans-serif", "system-ui"],
       },
       borderRadius: { lg: "1rem", md: "0.75rem", sm: "0.5rem" },

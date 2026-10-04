@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Orbitron } from "next/font/google";
+import { Great_Vibes, Inter, Orbitron } from "next/font/google";
 import { Providers } from "@/components/providers";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const orbitron = Orbitron({ subsets: ["latin"], variable: "--font-orbitron", display: "swap", weight: ["500", "600", "700", "800"] });
+const greatVibes = Great_Vibes({ subsets: ["latin"], variable: "--font-script", display: "swap", weight: "400" });
 
 export const metadata: Metadata = {
   title: { default: "Hari's Assistant", template: "%s · Hari's Assistant" },
@@ -26,7 +27,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${orbitron.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${orbitron.variable} ${greatVibes.variable}`}>
       <body>
         <Providers>{children}</Providers>
       </body>

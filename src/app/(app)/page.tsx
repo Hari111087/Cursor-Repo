@@ -94,8 +94,9 @@ export default function CommandCenter() {
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="grid items-center gap-8 lg:grid-cols-[1fr_auto_1fr]">
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} className="order-2 text-center lg:order-1 lg:text-left">
-          <h1 className="text-3xl font-bold md:text-4xl">
-            <span className="text-gradient">{hello},</span>
+          {/* Handwritten greeting (Great Vibes); scripts need extra size and no letter-spacing to read well */}
+          <h1 className="font-script text-5xl font-normal leading-tight tracking-normal md:text-6xl">
+            <span className="text-gradient -mx-3 px-3">{hello},</span>
             <br />
             <span className="text-foreground">{OWNER_NAME}</span>
           </h1>
