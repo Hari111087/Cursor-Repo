@@ -25,14 +25,15 @@ const config: Config = {
         gold: "rgb(var(--gold) / <alpha-value>)",
         success: "rgb(var(--success) / <alpha-value>)",
         danger: "rgb(var(--danger) / <alpha-value>)",
-        space: { 950: "#0A0E27", 900: "#111735", 800: "#1a2150" },
+        space: { 950: "#030608", 900: "#0A1418", 800: "#102028" },
       },
       fontFamily: {
         display: ["var(--font-orbitron)", "ui-sans-serif", "system-ui"],
         script: ["var(--font-script)", "cursive"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
         sans: ["var(--font-inter)", "ui-sans-serif", "system-ui"],
       },
-      borderRadius: { lg: "1rem", md: "0.75rem", sm: "0.5rem" },
+      borderRadius: { lg: "0.5rem", md: "0.375rem", sm: "0.25rem" },
       boxShadow: {
         glow: "0 0 24px rgb(var(--cyan) / 0.35)",
         "glow-violet": "0 0 24px rgb(var(--violet) / 0.35)",

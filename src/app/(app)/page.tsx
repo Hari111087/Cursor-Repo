@@ -48,6 +48,19 @@ function Clock() {
   );
 }
 
+/** Animated ‹‹‹ chevrons, as on HUD flight displays. */
+function Chevrons({ className }: { className?: string }) {
+  return (
+    <span className={cn("inline-flex", className)}>
+      {[0, 1, 2].map((i) => (
+        <motion.span key={i} className="-mx-px text-sm leading-none" animate={{ opacity: [0.25, 1, 0.25] }} transition={{ duration: 1.4, repeat: Infinity, delay: i * 0.2 }}>
+          ‹
+        </motion.span>
+      ))}
+    </span>
+  );
+}
+
 function Skeleton({ rows = 3 }: { rows?: number }) {
   return (
     <div className="space-y-3">
@@ -101,7 +114,7 @@ export default function CommandCenter() {
             <span className="text-foreground">{OWNER_NAME}</span>
           </h1>
           <p className="mt-3 text-sm text-muted-foreground">
-            {loading ? "Syncing systems…" : `${upcoming.length} events ahead · ${data?.unreadCount ?? 0} unread emails · ${data?.priorities.length ?? 0} priorities`}
+            {loading ? "Syncing systems…" : `${upcoming.length} event${upcoming.length === 1 ? "" : "s"} ahead · ${data?.unreadCount ?? 0} unread email${data?.unreadCount === 1 ? "" : "s"} · ${data?.priorities.length ?? 0} priorit${data?.priorities.length === 1 ? "y" : "ies"}`}
           </p>
           <div className="mt-5 flex flex-wrap justify-center gap-2 lg:justify-start">
             <Button variant="outline" onClick={() => setCommandOpen(true)}>
@@ -119,6 +132,11 @@ export default function CommandCenter() {
 
         <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} className="order-3 text-center lg:text-right">
           <Clock />
+          <div aria-hidden className="telemetry mt-3 flex items-center justify-center gap-3 lg:justify-end">
+            <Chevrons className="text-cyan" />
+            <span>SYS NOMINAL · LINK SECURE</span>
+            <Chevrons className="rotate-180 text-violet" />
+          </div>
           {data?.nudges?.[0] && (
             <div className="mt-4 inline-flex max-w-md items-start gap-2 rounded-lg border border-gold/30 bg-gold/10 px-3 py-2 text-left text-sm text-gold">
               <Lightbulb className="mt-0.5 h-4 w-4 shrink-0" /> {data.nudges[0]}
@@ -270,7 +288,7 @@ export default function CommandCenter() {
                           <ResponsiveContainer width="100%" height="100%">
                             <LineChart data={q.spark.map((v, i) => ({ i, v }))}>
                               <YAxis hide domain={["dataMin", "dataMax"]} />
-                              <Line type="monotone" dataKey="v" stroke={up ? "#22E3A0" : "#FF4D6D"} strokeWidth={1.5} dot={false} isAnimationActive={false} />
+                              <Line type="monotone" dataKey="v" stroke={up ? "#2BE3A0" : "#FF3B5C"} strokeWidth={1.5} dot={false} isAnimationActive={false} />
                             </LineChart>
                           </ResponsiveContainer>
                         </div>

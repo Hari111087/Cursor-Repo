@@ -10,7 +10,7 @@ export function Card({ className, delay = 0, ...props }: HTMLMotionProps<"div"> 
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, delay, ease: [0.22, 1, 0.36, 1] }}
-      className={cn("glass relative overflow-hidden rounded-lg p-5 shadow-[0_8px_32px_rgba(0,0,0,0.18)]", className)}
+      className={cn("hud-frame relative overflow-hidden rounded-sm p-5 shadow-[0_8px_32px_rgba(0,0,0,0.35)]", className)}
       {...props}
     />
   );

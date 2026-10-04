@@ -76,7 +76,7 @@ export function Watchlist({ items, quotes, connected, onAdd, onRemove, onAlert }
                       <ResponsiveContainer width="100%" height="100%">
                         <LineChart data={q.spark.map((v, i) => ({ i, v }))}>
                           <YAxis hide domain={["dataMin", "dataMax"]} />
-                          <Line dataKey="v" stroke={up ? "#22E3A0" : "#FF4D6D"} strokeWidth={1.5} dot={false} isAnimationActive={false} />
+                          <Line dataKey="v" stroke={up ? "#2BE3A0" : "#FF3B5C"} strokeWidth={1.5} dot={false} isAnimationActive={false} />
                         </LineChart>
                       </ResponsiveContainer>
                     )}

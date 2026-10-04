@@ -16,7 +16,7 @@ import { cn, formatMoney, formatPct } from "@/lib/utils";
 type Row = Holding & { price: number; value: number; pnl: number; pnlPct: number; dayChange: number; dayChangePct: number; valueUsd: number };
 interface PortfolioData { rows: Row[]; totals: { value: number; pnl: number; pnlPct: number; day: number }; allocation: { name: string; value: number }[]; usdInr: number }
 
-export const CHART_COLORS = ["#00E5FF", "#8B5CF6", "#FF2E97", "#FFC857", "#22E3A0", "#5B8CFF", "#FF8A5B", "#B7F36B"];
+export const CHART_COLORS = ["#2EE6E6", "#FF8A1F", "#FF2A4D", "#FFB800", "#2BE3A0", "#5B8CFF", "#FF8A5B", "#B7F36B"];
 
 export function Portfolio() {
   const toast = useToast();
@@ -55,7 +55,7 @@ export function Portfolio() {
                 <Pie data={data?.allocation ?? []} dataKey="value" nameKey="name" innerRadius="62%" outerRadius="90%" paddingAngle={3} stroke="none">
                   {(data?.allocation ?? []).map((_, i) => <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />)}
                 </Pie>
-                <Tooltip formatter={(v: number) => formatMoney(v)} contentStyle={{ background: "rgba(17,23,53,0.95)", border: "1px solid rgba(0,229,255,0.3)", borderRadius: 8 }} itemStyle={{ color: "#fff" }} />
+                <Tooltip formatter={(v: number) => formatMoney(v)} contentStyle={{ background: "rgba(6,14,18,0.95)", border: "1px solid rgba(46,230,230,0.3)", borderRadius: 8 }} itemStyle={{ color: "#fff" }} />
               </PieChart>
             </ResponsiveContainer>
             <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">

@@ -8,13 +8,13 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-cyan text-[#0A0E27] hover:shadow-glow hover:brightness-110 font-semibold",
+        default: "bg-cyan text-[#030608] hover:shadow-glow hover:brightness-110 font-semibold",
         secondary: "bg-violet/90 text-white hover:bg-violet hover:shadow-glow-violet",
         accent: "bg-magenta text-white hover:shadow-glow-magenta",
         outline: "border border-cyan/40 text-cyan hover:bg-cyan/10 hover:shadow-glow",
         ghost: "hover:bg-foreground/5 text-foreground/80 hover:text-foreground",
         danger: "bg-danger/90 text-white hover:bg-danger",
-        success: "bg-success text-[#0A0E27] font-semibold hover:brightness-110",
+        success: "bg-success text-[#030608] font-semibold hover:brightness-110",
       },
       size: {
         default: "h-10 px-4 py-2",

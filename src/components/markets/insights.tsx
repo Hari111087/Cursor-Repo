@@ -103,7 +103,7 @@ export function Insights() {
             ))}
             <div>
               <Label htmlFor="horizon">Time horizon: <span className="text-cyan">{horizon} years</span></Label>
-              <input id="horizon" type="range" min={1} max={40} value={horizon} onChange={(e) => setHorizon(Number(e.target.value))} className="w-full accent-[#00E5FF]" />
+              <input id="horizon" type="range" min={1} max={40} value={horizon} onChange={(e) => setHorizon(Number(e.target.value))} className="w-full accent-[#2EE6E6]" />
             </div>
             <div>
               <Label htmlFor="goals">Goals</Label>

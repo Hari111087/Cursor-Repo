@@ -65,7 +65,7 @@ export function AppShell({ children, demo }: { children: React.ReactNode; demo: 
                 {active && (
                   <motion.span layoutId="nav-active" className="absolute inset-0 rounded-md bg-cyan/10 neon-border" transition={{ type: "spring", stiffness: 400, damping: 32 }} />
                 )}
-                <n.icon className={cn("relative h-5 w-5 shrink-0", active && "drop-shadow-[0_0_6px_rgb(0_229_255)]")} />
+                <n.icon className={cn("relative h-5 w-5 shrink-0", active && "drop-shadow-[0_0_6px_rgb(46_230_230)]")} />
                 <span className="relative hidden lg:inline">{n.label}</span>
               </Link>
             );
@@ -135,7 +135,7 @@ export function AppShell({ children, demo }: { children: React.ReactNode; demo: 
 function TabLink({ href, label, icon: Icon, active }: { href: string; label: string; icon: React.ComponentType<{ className?: string }>; active: boolean }) {
   return (
     <Link href={href} aria-current={active ? "page" : undefined} className={cn("flex flex-1 flex-col items-center justify-center gap-1 text-[10px] font-medium uppercase tracking-wider", active ? "text-cyan" : "text-muted-foreground")}>
-      <Icon className={cn("h-5 w-5", active && "drop-shadow-[0_0_6px_rgb(0_229_255)]")} />
+      <Icon className={cn("h-5 w-5", active && "drop-shadow-[0_0_6px_rgb(46_230_230)]")} />
       {label}
     </Link>
   );

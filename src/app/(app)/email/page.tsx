@@ -28,7 +28,7 @@ function SafeEmailBody({ html, text }: { html: string; text: string }) {
   const doc = useMemo(
     () => `<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src https: data:; style-src 'unsafe-inline'"><base target="_blank"><style>
       body{font-family:Inter,system-ui,sans-serif;font-size:14px;line-height:1.6;color:${fg};background:transparent;margin:0;padding:4px;word-wrap:break-word}
-      a{color:#00E5FF} img{max-width:100%;height:auto} table{max-width:100%} blockquote{border-left:2px solid #8B5CF6;margin:0;padding-left:12px;color:#aab}
+      a{color:#2EE6E6} img{max-width:100%;height:auto} table{max-width:100%} blockquote{border-left:2px solid #FF8A1F;margin:0;padding-left:12px;color:#aab}
     </style></head><body>${html || `<pre style="white-space:pre-wrap;font-family:inherit">${text.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]!)}</pre>`}</body></html>`,
     [html, text, fg],
   );

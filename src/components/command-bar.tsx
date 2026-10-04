@@ -49,7 +49,7 @@ export function CommandBar() {
   return (
     <DialogPrimitive.Root open={open} onOpenChange={setOpen}>
       <DialogPrimitive.Portal>
-        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-[#05071a]/70 backdrop-blur-sm" />
+        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-[#010304]/70 backdrop-blur-sm" />
         <DialogPrimitive.Content className="fixed left-1/2 top-[12dvh] z-50 w-[calc(100%-2rem)] max-w-2xl -translate-x-1/2" aria-describedby={undefined}>
           <DialogPrimitive.Title className="sr-only">Command bar</DialogPrimitive.Title>
           <Command className="glass neon-border overflow-hidden rounded-xl" shouldFilter={!value.includes(" ") || value.length < 3} loop>

@@ -13,7 +13,7 @@ export function HudBackground() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let w = 0, h = 0, raf = 0;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const colors = ["0,229,255", "139,92,246", "255,46,151"];
+    const colors = ["46,230,230", "46,230,230", "255,138,31", "255,255,255"];
     type P = { x: number; y: number; vx: number; vy: number; r: number; c: string; a: number };
     let ps: P[] = [];
 
@@ -26,7 +26,7 @@ export function HudBackground() {
       const n = Math.min(70, Math.floor((w * h) / 22000));
       ps = Array.from({ length: n }, () => ({
         x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 0.15, vy: (Math.random() - 0.5) * 0.15,
-        r: Math.random() * 1.6 + 0.4, c: colors[Math.floor(Math.random() * 3)], a: Math.random() * 0.5 + 0.2,
+        r: Math.random() * 1.6 + 0.4, c: colors[Math.floor(Math.random() * colors.length)], a: Math.random() * 0.5 + 0.2,
       }));
     };
 
@@ -45,7 +45,7 @@ export function HudBackground() {
           const q = ps[j];
           const d = Math.hypot(p.x - q.x, p.y - q.y);
           if (d < 110) {
-            ctx.strokeStyle = `rgba(0,229,255,${(1 - d / 110) * (light ? 0.06 : 0.12)})`;
+            ctx.strokeStyle = `rgba(46,230,230,${(1 - d / 110) * (light ? 0.06 : 0.12)})`;
             ctx.lineWidth = 0.6;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
@@ -75,11 +75,14 @@ export function HudBackground() {
 
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-      <div className="hud-grid absolute inset-0 animate-grid-pan [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_80%)]" />
-      <div className="absolute -left-40 -top-40 h-[480px] w-[480px] rounded-full bg-cyan/10 blur-[120px]" />
-      <div className="absolute -bottom-40 -right-20 h-[520px] w-[520px] rounded-full bg-violet/10 blur-[140px]" />
-      <div className="absolute right-1/3 top-1/3 h-[300px] w-[300px] rounded-full bg-magenta/5 blur-[120px]" />
+      <div className="hud-grid absolute inset-0 animate-grid-pan [mask-image:radial-gradient(ellipse_at_center,black_25%,transparent_75%)]" />
+      {/* Edge light: teal on the left, reactor orange on the right */}
+      <div className="absolute -left-40 top-1/4 h-[520px] w-[420px] rounded-full bg-cyan/10 blur-[120px]" />
+      <div className="absolute -right-40 top-1/3 h-[520px] w-[420px] rounded-full bg-violet/10 blur-[130px]" />
+      <div className="absolute inset-y-[12%] left-0 w-[2px] bg-gradient-to-b from-transparent via-cyan to-transparent opacity-70 shadow-[0_0_18px_4px_rgb(var(--cyan)/0.45)]" />
+      <div className="absolute inset-y-[12%] right-0 w-[2px] bg-gradient-to-b from-transparent via-violet to-transparent opacity-70 shadow-[0_0_18px_4px_rgb(var(--violet)/0.45)]" />
       <canvas ref={ref} className="absolute inset-0 h-full w-full" />
+      <div className="scanlines absolute inset-0 opacity-60" />
     </div>
   );
 }

@@ -89,7 +89,7 @@ export function FocusTimer({ tasks, sessions, onSession }: { tasks: Task[]; sess
   const pct = 1 - remaining / total;
   const R = 70;
   const C = 2 * Math.PI * R;
-  const color = mode === "focus" ? "#00E5FF" : "#22E3A0";
+  const color = mode === "focus" ? "#2EE6E6" : "#2BE3A0";
 
   return (
     <Card delay={0.1}>

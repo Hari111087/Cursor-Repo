@@ -160,18 +160,18 @@ export default function TimePage() {
                 <ComposedChart data={weekly} margin={{ left: -16, right: 0, top: 8 }}>
                   <defs>
                     <linearGradient id="focusBar" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#00E5FF" stopOpacity={0.9} />
-                      <stop offset="100%" stopColor="#8B5CF6" stopOpacity={0.5} />
+                      <stop offset="0%" stopColor="#2EE6E6" stopOpacity={0.9} />
+                      <stop offset="100%" stopColor="#FF8A1F" stopOpacity={0.5} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 6" stroke="currentColor" strokeOpacity={0.1} vertical={false} />
                   <XAxis dataKey="day" tick={{ fill: "currentColor", fontSize: 11, opacity: 0.7 }} axisLine={false} tickLine={false} />
                   <YAxis yAxisId="l" tick={{ fill: "currentColor", fontSize: 11, opacity: 0.7 }} axisLine={false} tickLine={false} />
                   <YAxis yAxisId="r" orientation="right" allowDecimals={false} tick={{ fill: "currentColor", fontSize: 11, opacity: 0.7 }} axisLine={false} tickLine={false} />
-                  <Tooltip contentStyle={{ background: "rgba(17,23,53,0.95)", border: "1px solid rgba(0,229,255,0.3)", borderRadius: 8, color: "#fff" }} cursor={{ fill: "rgba(0,229,255,0.05)" }} />
+                  <Tooltip contentStyle={{ background: "rgba(6,14,18,0.95)", border: "1px solid rgba(46,230,230,0.3)", borderRadius: 8, color: "#fff" }} cursor={{ fill: "rgba(46,230,230,0.05)" }} />
                   <Legend wrapperStyle={{ fontSize: 12 }} />
                   <Bar yAxisId="l" dataKey="focus" name="Focus minutes" fill="url(#focusBar)" radius={[6, 6, 0, 0]} maxBarSize={36} />
-                  <Line yAxisId="r" dataKey="completed" name="Tasks completed" stroke="#FF2E97" strokeWidth={2} dot={{ r: 3, fill: "#FF2E97" }} type="monotone" />
+                  <Line yAxisId="r" dataKey="completed" name="Tasks completed" stroke="#FF2A4D" strokeWidth={2} dot={{ r: 3, fill: "#FF2A4D" }} type="monotone" />
                 </ComposedChart>
               </ResponsiveContainer>
             </div>
