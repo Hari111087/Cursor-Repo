@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Brand palette as RGB triplets so Tailwind can apply alpha */
+    /* Stark HUD palette: teal line-work, reactor orange, signal red */
+    --cyan: 46 230 230;
+    --violet: 255 138 31;
+    --magenta: 255 42 77;
+    --gold: 255 184 0;
+    --success: 43 227 160;
+    --danger: 255 59 92;
+
+    /* Light theme */
+    --background: 228 40% 97%;
+    --foreground: 232 50% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 232 50% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 232 50% 12%;
+    --muted: 228 30% 92%;
+    --muted-foreground: 230 15% 38%;
+    --border: 230 30% 85%;
+    --input: 230 30% 85%;
+    --ring: 188 100% 40%;
+
+    --glass-bg: 255 255 255;
+    --glass-alpha: 0.7;
+    --glass-border: 15 23 70;
+    --glass-border-alpha: 0.1;
+    --grad-mid: 16 60 66;
+    --grid-line: 15 23 70;
+    --grid-alpha: 0.05;
+  }
+
+  .light {
+    /* Darker brand tints keep text contrast >= 4.5:1 on light surfaces */
+    --cyan: 0 122 128;
+    --violet: 180 82 0;
+    --magenta: 196 18 52;
+    --gold: 150 100 0;
+    --success: 0 135 90;
+    --danger: 200 25 55;
+  }
+
+  .dark {
+    --background: 195 60% 2%;
+    --foreground: 185 30% 94%;
+    --card: 195 45% 5%;
+    --card-foreground: 185 30% 94%;
+    --popover: 195 45% 5%;
+    --popover-foreground: 185 30% 94%;
+    --muted: 195 30% 11%;
+    --muted-foreground: 188 14% 66%;
+    --border: 180 70% 60%;
+    --input: 192 35% 14%;
+    --ring: 180 78% 54%;
+
+    --glass-bg: 5 12 15;
+    --glass-alpha: 0.62;
+    --glass-border: 46 230 230;
+    --glass-border-alpha: 0.16;
+    --grad-mid: 233 255 255;
+    --grid-line: 46 230 230;
+    --grid-alpha: 0.045;
+  }
+
+  * {
+    @apply border-[rgb(var(--glass-border)/var(--glass-border-alpha))];
+  }
+  html {
+    -webkit-tap-highlight-color: transparent;
+    background-color: #f2f7f8;
+  }
+  html.dark {
+    background-color: #030608;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    min-height: 100dvh;
+  }
+  .dark body {
+    /* Near-black with a teal glow on the left edge and reactor-orange on the right */
+    background:
+      radial-gradient(60% 80% at -10% 45%, rgb(46 230 230 / 0.10), transparent 60%),
+      radial-gradient(55% 80% at 110% 55%, rgb(255 138 31 / 0.09), transparent 60%),
+      linear-gradient(180deg, #030608 0%, #050b0e 100%) fixed;
+    background-attachment: fixed;
+  }
+  .light body {
+    background: linear-gradient(160deg, #f2f7f8 0%, #e4eef0 100%) fixed;
+  }
+  h1, h2, h3 {
+    @apply font-display tracking-wide;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-cyan ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer components {
+  .glass {
+    background: rgb(var(--glass-bg) / var(--glass-alpha));
+    border: 1px solid rgb(var(--glass-border) / var(--glass-border-alpha));
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+  }
+  .text-gradient {
+    background: linear-gradient(90deg, rgb(var(--cyan)), rgb(var(--grad-mid)) 45%, rgb(var(--violet)) 80%, rgb(var(--magenta)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .glow-text {
+    text-shadow: 0 0 12px rgb(var(--cyan) / 0.6);
+  }
+  .neon-border {
+    box-shadow: 0 0 0 1px rgb(var(--cyan) / 0.5), 0 0 18px rgb(var(--cyan) / 0.25), inset 0 0 12px rgb(var(--cyan) / 0.08);
+  }
+  .hud-grid {
+    background-image:
+      linear-gradient(rgb(var(--grid-line) / var(--grid-alpha)) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--grid-line) / var(--grid-alpha)) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+  .scrollbar-thin::-webkit-scrollbar-thumb { background: rgb(var(--cyan) / 0.25); border-radius: 999px; }
+  /* Wireframe HUD panel: thin frame + bright L-shaped corner brackets */
+  .hud-frame {
+    --hc: rgb(var(--cyan) / 0.9);
+    --hl: 14px;
+    background:
+      linear-gradient(var(--hc) 0 0) top left / var(--hl) 1.5px no-repeat,
+      linear-gradient(var(--hc) 0 0) top left / 1.5px var(--hl) no-repeat,
+      linear-gradient(var(--hc) 0 0) top right / var(--hl) 1.5px no-repeat,
+      linear-gradient(var(--hc) 0 0) top right / 1.5px var(--hl) no-repeat,
+      linear-gradient(var(--hc) 0 0) bottom left / var(--hl) 1.5px no-repeat,
+      linear-gradient(var(--hc) 0 0) bottom left / 1.5px var(--hl) no-repeat,
+      linear-gradient(var(--hc) 0 0) bottom right / var(--hl) 1.5px no-repeat,
+      linear-gradient(var(--hc) 0 0) bottom right / 1.5px var(--hl) no-repeat,
+      rgb(var(--glass-bg) / var(--glass-alpha));
+    border: 1px solid rgb(var(--glass-border) / var(--glass-border-alpha));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .scanlines {
+    background-image: repeating-linear-gradient(0deg, rgb(var(--cyan) / 0.035) 0 1px, transparent 1px 3px);
+  }
+  .telemetry {
+    @apply font-mono text-[10px] uppercase tracking-[0.2em] text-cyan/60;
+  }
+  .skeleton {
+    background: linear-gradient(90deg, rgb(var(--glass-border) / 0.06), rgb(var(--glass-border) / 0.14), rgb(var(--glass-border) / 0.06));
+    background-size: 200% 100%;
+    @apply animate-shimmer rounded-md;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
